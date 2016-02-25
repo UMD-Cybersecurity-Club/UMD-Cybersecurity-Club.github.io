@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="../stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="../stylesheets/github-dark.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="../stylesheets/print.css" media="print">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.2.0/styles/default.min.css">
+    <link class="codestyle" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.2.0/styles/tomorrow-night-bright.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.2.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <title>Umd-cybersecurity-club.GitHub.io by UMD-Cybersecurity-Club</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Umd-cybersecurity-club.GitHub.io</h1>
+        <h2></h2>
+
+        <section id="downloads">
+          <a href="https://github.com/UMD-Cybersecurity-Club" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+
+<h1>General Body Meeting #1</h1>
+
+<p>February 10th, 2016 <br />
+AVW 3460</p>
+
+<h3>Bash Scriping</h3>
+
+<p>
+<a href="https://github.com/UMD-Cybersecurity-Club/GeneralBody/blob/master/Spring2016/Presentations/2016-02-11_BashHacking-AutomationandProblemSolving.pptx?raw=true">Presentation Link</a></p>
+<ul>
+<li>Bash scripting gives users the power of the commandline while allowing the automative capabilities of scripting. </li>
+</ul>
+
+<p>Say you have a script you want to run, in this example lets say its a simple counter that goes from 0 to some power of 2. I have one written in Python below. Lets call it <strong>prog.py</strong>.  </p>
+
+<pre><code class="python">#!/usr/bin/env python
+
+import math
+
+t = int(raw_input())
+x = 2**t
+
+count = 0
+while count &lt; x:
+    count = count + 1
+
+print count</code></pre>
+
+<p>Here the program takes in <strong>stdin</strong> or Standard Input. This means when you run it, you will be prompted to enter something. </p>
+
+<p>But before you run it, you must make is <em>executable</em> by giving it the correct permission. In bash each file has the permission to either <em>write</em>, <em>read</em>, or <em>execute</em>. To allow a progarm to be executable just do the command:</p>
+
+<p><pre><code class="bash">$ chmod +x prog.py</code></pre>
+This will allow the program to have permission to execute on your machine. Now to execute our <strong>prog.py</strong>. </p>
+
+<blockquote>
+  <p>Running the program, if you enter say 5, it will print 32 to the terminal.</p>
+</blockquote>
+
+<p><pre><code class="bash">$ ./prog.py
+5
+32</code></pre>
+Now say you wanted to run this program for a range of numbers from 5 to 25. You could modify this program to do this, also you can do it just as simply in bash scripting. </p>
+
+<p>Here is a simple bash script which can accomplish this. Lets call it <strong>test.sh</strong>.</p>
+
+<pre><code class="bash">#!/bin/bash
+
+for i in $(seq 5 25); do
+    ./prog.py &lt;&lt;&lt; $i
+done</code></pre>
+
+<blockquote>
+  <p>To execute a script you have wrote in bash, you need to make sure you end the name with <em>.sh</em> for <em>shell</em>, start your script with this header:</p>
+
+  <pre><code class="bash">#!/bin/bash  </code></pre>
+</blockquote>
+
+
+<blockquote>
+  <p>This lets the computer know that when you want to run this, it needs to interpret it as a bash script. </p>
+
+<p>Earlier I started my Python script with a different header so that my computer knows to interpret it as a Python script. </p>
+</blockquote>
+
+<p>Starting with the overall view of the script, we can see it a simple for loop. We see that the conditional is made with <strong>for i in $(seq 5 25)</strong>. "<strong>i</strong>" is the iterating variable, but what is <strong>seq</strong> and the dollar sign for? </p>
+
+<p>In bash, variable data is accessed using the prefix <strong>$</strong>. Normally a variable initialization would look like this:
+<pre><code class="bash">number=5
+name="testudo"</code></pre></p>
+
+<blockquote>
+  <p>Make sure when initailizing variables that you do not makes spaces in between the equals signs, the assignment, or the value being assigned. </p>
+
+<p>In order to access the variables you just precede the name of the variables with a <strong>$</strong>. </p>
+
+<p><pre><code class="bash">$number
+$name</code></pre></p>
+</blockquote>
+
+<p>Now that we know how variable assignment works, what is <strong>seq 5 25</strong>? <strong>seq</strong> is a command in bash that takes 2 parameters, a start and end number, and will give you every number in <em>sequence</em> from start to end. Run it on the command line and you will get a <em>sequence</em> from your staring number to ending number. </p>
+
+<p><pre><code class="bash">$ seq 1 10
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10</code></pre>
+We can take advantage of this in our for loop, since with each loop <strong>seq</strong> will iterate once and update the value of <strong>i</strong> each time. This is why we have it as <strong>$(seq 5 25)</strong> so we can just access the stored ouput from <strong>seq</strong> and assign it to <strong>i</strong>. </p>
+
+<p>Going back to our script, we end the conditional for the for loop with a semicolon, and start the code block we want to have done in the loop with <strong>do</strong>, and when we are done we close it with <strong>done</strong>. Easy, right?</p>
+
+<p><pre><code class="bash">for i in $(seq 5 25); do
+    ./prog.py &lt;&lt;&lt; $i
+done</code></pre>
+In between our <strong>do</strong> and <strong>done</strong> we have the meat of our script. To summarize, we are executing the script while feeding it input with the values from variable <strong>i</strong>. </p>
+
+<p>Our program <em>prog.py</em> is being executed, and the triple left angle brackets means that we want to direct some input into the program. This is the same as typing a number into the commandline after you executed the python script, only this time the value from <strong>i</strong> is being fed into the script. </p>
+
+<blockquote>
+  <p>Say the <strong>i</strong> = 5. The two below are fulfilling the same function. The first is the input redirection in the script, and the second is input from you typing into the command line. </p>
+
+  <p><pre><code class="bash">./prog.py &lt;&lt;&lt; 5 </code></pre></p>
+
+  <p><pre><code class="bash">$ ./prog.py
+5  </code></pre></p>
+</blockquote>
+
+<p>If you ran <strong>test.sh</strong> you should see this as a result. </p>
+
+<p><pre><code class="bash">$ ./test.sh 
+32
+64
+128
+256
+512
+1024
+2048
+4096
+8192
+16384
+32768
+65536
+131072
+262144
+524288
+1048576
+2097152
+4194304
+8388608
+16777216
+33554432</code></pre>
+You may have noticed the last few to take a little while to get printed. That is just because they are large numbers that need to be counted up to, but I wonder if you could time how long it took the program to count each of those numbers...</p>
+
+<p>This is indeed possible, but I will leave this for you to attempt on your own. I will give you a hint:</p>
+
+<p><pre><code class="bash">$ time ./test.sh</code></pre>
+Additionally, in bash every command comes with its own set of <strong>man</strong> pages, or <em>manual</em> if you will. To see the <strong>man</strong> pages of any command, just do <strong>man</strong>, followed by the command you want to know about more. Also remember: <strong>Google is your friend.</strong></p>
+
+<p><pre><code class="bash">$ man time</code></pre></p>
+
+<p>
+One way to accomplish this...
+    <pre><code class="bash">#/bin/bash
+    TIMEFORMAT=%R
+    for i in $(seq 5 25); do
+        echo "Time amount: $i"
+        time ./prog.py &lt;&lt;&lt; $i;
+    done</code></pre>
+</p>
+
+     </section>
+    </div>         
+  </body>
+</html>
