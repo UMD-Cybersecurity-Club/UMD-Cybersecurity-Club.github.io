@@ -203,15 +203,16 @@ Additionally, in bash every command comes with its own set of <strong>man</stron
 
 <p><pre><code class="bash">$ man time</code></pre></p>
 
-<spoiler>
+
+<div id="spoiler" style="display:none">
     <pre><code class="bash">#!/bin/bash
     TIMEFORMAT=%R
     for i in $(seq 5 25); do
         echo "Time amount: $i"
         time ./prog.py &lt;&lt;&lt; $i;
     done</code></pre>
-</spoiler>
-
+  </div>
+    <button title="Click to show/hide content" type="button" onclick="if(document.getElementById('spoiler') .style.display=='none') {document.getElementById('spoiler') .style.display=''}else{document.getElementById('spoiler') .style.display='none'}">One way to implement this...</button>
 
      </section>
     </div>         
