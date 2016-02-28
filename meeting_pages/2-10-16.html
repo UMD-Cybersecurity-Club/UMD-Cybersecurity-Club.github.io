@@ -203,16 +203,14 @@ Additionally, in bash every command comes with its own set of <strong>man</stron
 
 <p><pre><code class="bash">$ man time</code></pre></p>
 
-<p>
-One way to accomplish this...
+<details><summary>One way to accomplish this...</summary>
     <pre><code class="bash">#/bin/bash
     TIMEFORMAT=%R
     for i in $(seq 5 25); do
         echo "Time amount: $i"
         time ./prog.py &lt;&lt;&lt; $i;
     done</code></pre>
-</p>
-
+    </details></p>
      </section>
     </div>         
   </body>
